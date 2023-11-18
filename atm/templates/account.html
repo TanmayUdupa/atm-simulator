@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section pt-2">
+        <div class="media">
+            <div class="media-body">
+                <h2 class="account-heading">Account Details</h2>
+                <p class= "size">Account Number: {{current_user.account_number}}</p>
+                <p class="size">Account Type: {{current_user.type_acc}}</p>
+                <p class="size">Account Balance: {{current_user.account_balance}}</p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

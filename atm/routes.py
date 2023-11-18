@@ -48,6 +48,11 @@ def login():
             flash('Login Unsuccessful. Please check account number and pin', 'danger')
     return render_template('login.html', title = 'Login', form = form)
 
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html')
+
 @app.route("/logout")
 def logout():
     logout_user()
