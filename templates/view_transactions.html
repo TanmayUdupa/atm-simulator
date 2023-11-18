@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for transaction in transactions %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="transaction-metadata">
+                    <a class="mr-2" href="#">{{ transaction.owner }}</a>
+                    <small class="text-muted">{{ transaction.date }}</small>
+                </div>
+                <h2><a class="transaction-title" href="#">{{ transaction.type }}</a></h2>
+                <p class="transaction-content">Amount: {{ transaction.amount }}</p>
+                <p class="transaction-content">Previous Balance: {{ transaction.prev_balance }}</p>
+                <p class="transaction-content">Current Balance: {{ transaction.curr_balance }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
