@@ -29,6 +29,7 @@ def home():
     return render_template('home.html')
 
 @app.route("/view_transactions")
+@login_required
 def view_transactions():
     return render_template('view_transactions.html', transactions=transactions)
 
@@ -51,8 +52,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
-@app.route("/profile")
-@login_required
-def profile():
-    return render_template('profile.html', title = 'Profile')
