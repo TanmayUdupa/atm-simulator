@@ -1,9 +1,7 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import LoginForm
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'c02b344bb1ba461b033bb918540bcfd8'
+from flask import render_template, url_for, flash, redirect
+from atm import app
+from atm.forms import LoginForm
+from atm.models import User, Transaction
 
 transactions = [
     {
@@ -23,6 +21,7 @@ transactions = [
         'date': '18-08-2023'
     }
 ]
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -46,6 +45,3 @@ def login():
         else:
             flash('Login Unsuccessful. Please check account number and pin', 'danger')
     return render_template('login.html', title = 'Login', form = form)   
-
-if __name__ == "__main__":
-    app.run(debug = True)
