@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(50), nullable = False)
     account_number = db.Column(db.String(11), unique = True, nullable = False)
-    account_balance = db.Column(db.Numeric, unique = True, nullable = False)
+    account_balance = db.Column(db.Numeric(scale = 2), unique = True, nullable = False)
     profile_pic = db.Column(db.String(20), nullable = False, default = 'default.jpg')
     pin = db.Column(db.String(60), unique = True, nullable = False)
     type_acc = db.Column(db.String(7), nullable = False)
@@ -22,10 +22,10 @@ class User(db.Model, UserMixin):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     type_trans = db.Column(db.String(8), nullable = False)
-    date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-    prev_balance = db.Column(db.Numeric, nullable = False)
-    curr_balance = db.Column(db.Numeric, nullable = False)
-    amount = db.Column(db.Numeric, nullable = False)
+    date = db.Column(db.DateTime, nullable = False, default = datetime.now)
+    prev_balance = db.Column(db.Numeric(scale = 2), nullable = False)
+    curr_balance = db.Column(db.Numeric(scale = 2), nullable = False)
+    amount = db.Column(db.Numeric(scale = 2), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
     def __repr__(self):
