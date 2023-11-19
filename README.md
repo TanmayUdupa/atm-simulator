@@ -1,2 +1,2 @@
 # atm-simulator
-ATM Simulator using Streamlit
+ATM Simulator using Flask
