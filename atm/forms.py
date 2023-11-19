@@ -14,6 +14,7 @@ class WithdrawForm(FlaskForm):
     def validate_amount(self, amount):
         if amount.data > current_user.account_balance:
             raise ValidationError('Amount is greater than your account balance')
-        decimal_places = len(str(amount).split(".")[1]) if "." in str(amount) else 0
-        if decimal_places > 2:
-            raise ValidationError("Amount cannot have more than 2 decimal places")
+        
+class DepositForm(FlaskForm):
+    amount = DecimalField('Amount', validators=[DataRequired()])
+    submit = SubmitField('Deposit')
