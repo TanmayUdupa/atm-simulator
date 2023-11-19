@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
-from atm import app, bcrypt
-from atm.forms import LoginForm
+from atm import app, bcrypt, db
+from atm.forms import LoginForm, WithdrawForm
 from atm.models import User, Transaction
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -31,6 +31,7 @@ def home():
 @app.route("/view_transactions")
 @login_required
 def view_transactions():
+    transactions = current_user.transactions
     return render_template('view_transactions.html', transactions=transactions)
 
 @app.route("/login", methods = ['GET', 'POST'])
@@ -52,6 +53,23 @@ def login():
 @login_required
 def account():
     return render_template('account.html')
+
+@app.route("/withdraw", methods = ["GET", "POST"])
+@login_required
+def withdraw():
+    form = WithdrawForm()
+    if form.validate_on_submit():
+        prev_balance = current_user.account_balance
+        curr_balance = current_user.account_balance - form.amount.data
+        current_user.account_balance = curr_balance
+        transaction = Transaction(type_trans = 'Withdraw', prev_balance = prev_balance, curr_balance = curr_balance, 
+                                  amount = form.amount.data, user = current_user)
+        db.session.add(transaction)
+        db.session.commit()
+        flash('Withdrawal successful!', 'success')
+        return redirect(url_for('home'))
+    return render_template('withdraw.html', title='Withdraw Amount',
+                           form=form, legend='Withdraw Amount')
 
 @app.route("/logout")
 def logout():
